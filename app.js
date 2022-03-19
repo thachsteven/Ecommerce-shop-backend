@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser")
 const morgan  = require("morgan")
+const mongoose = require("mongoose")
 
 //Middle ware
 app.use(bodyParser.json())
@@ -27,6 +28,12 @@ app.post(`${api}/products`, (req, res) => {
 
   res.send(newProduct);
 });
+
+mongoose.connect(process.env.CONNECTION_STRING).then(()=> {
+  console.log('Database connection is ready...')
+}).catch((err)=> {
+  console.log(err)
+})
 
 app.listen(3000, () => {
   console.log(api);
