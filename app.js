@@ -1,10 +1,9 @@
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors")
-
-const app = express();
 
 app.use(cors())
 app.options('*', cors())
