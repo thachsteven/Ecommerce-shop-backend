@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors")
+const jwt = require('express-jwt');
 
 const app = express();
 
@@ -13,17 +14,19 @@ const categoriesRoutes = require("./routes/categories");
 const productsRoutes = require("./routes/products");
 const usersRoutes = require("./routes/users");
 const ordersRoutes = require("./routes/orders");
+const authJwt = require("./helpers/jwt");
 
 require("dotenv/config");
 const api = process.env.API_URL;
+const secret = process.env.SECRET
 
 //Middle ware
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
 
 //Routes
-app.use(`${api}/categories`, categoriesRoutes);
-app.use(`${api}/products`, productsRoutes);
+app.use(`${api}/categories`, authJwt(secret) , categoriesRoutes);
+app.use(`${api}/products`,authJwt(secret), productsRoutes);
 app.use(`${api}/users`, usersRoutes);
 app.use(`${api}/orders`, ordersRoutes);
 
