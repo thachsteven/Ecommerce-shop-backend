@@ -49,6 +49,10 @@ userSchema.virtual("id").get(function () {
 
 userSchema.set("toJSON", {
   virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
 });
 
 exports.User = mongoose.model("User", userSchema);
