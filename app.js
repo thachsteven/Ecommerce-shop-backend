@@ -28,8 +28,8 @@ app.use(morgan("tiny"));
 //Routes
 app.use(`${api}/categories`, authJwt(secret) , categoriesRoutes);
 app.use(`${api}/products`,authJwt(secret), productsRoutes);
-app.use(`${api}/users`, usersRoutes);
-app.use(`${api}/orders`, ordersRoutes);
+app.use(`${api}/users`, authJwt(secret), usersRoutes);
+app.use(`${api}/orders`, authJwt(secret), ordersRoutes);
 
 app.use(errorHandler)
 
