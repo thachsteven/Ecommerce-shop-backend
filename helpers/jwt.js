@@ -6,6 +6,7 @@ const authJwt = (secret) => {
   return jwt({
     secret,
     algorithms: ["HS256"],
+    isRevoked: isRevoked
   }).unless({
     path: [
       //Tất cả sau * sẽ được chấp thuận
@@ -16,5 +17,12 @@ const authJwt = (secret) => {
     ]
   });
 };
+
+async function isRevoked(req, payload, done) {
+  if(!payload.isAdmin){
+    done(null, true)
+  }
+  done()
+}
 
 module.exports = authJwt;
