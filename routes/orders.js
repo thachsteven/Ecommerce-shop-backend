@@ -67,4 +67,43 @@ router.post('/', async (req, res) =>{
 
 })
 
+
+router.put('/:id',  async(req, res) => {
+    const order = await Order.findByIdAndUpdate(
+        req.params.id,
+        {
+            status: req.body.status
+        },
+        {
+            new: true 
+        }
+    )
+    if(!order) {
+        return res.status(404).send('The order cannot be updated')
+    }
+    res.send(order);
+})
+
+router.delete('/:id', (req, res) =>{
+    Order.findByIdAndRemove(req.params.id).then(order=> {
+        if(order){
+            return res.status(200).json({
+                success: true,
+                message: "The order is deleted"
+            })
+        } 
+        else {
+            return res.status(404).json({
+                success: false,
+                message: "order not found!"
+            })
+        }
+    }).catch(err=> {
+        return res.status(400).json({
+            success: false,
+            error: err
+        })
+    })
+})
+
 module.exports =router;
