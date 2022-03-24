@@ -24,6 +24,7 @@ const secret = process.env.SECRET
 //Middle ware
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
 
 //Routes
 app.use(`${api}/categories`, authJwt(secret) , categoriesRoutes);
