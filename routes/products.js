@@ -47,7 +47,7 @@ router.get(`/`, async (req, res) => {
 });
 
 //Pagination
-router.get(`/pagination/:page`, async (req, res, next) => {
+router.get(`/pagination/:page/:limit`, async (req, res, next) => {
   let limit = req.params.limit || 10 // số lượng sản phẩm xuất hiện trên 1 page
   let page = req.params.page || 1; 
 
