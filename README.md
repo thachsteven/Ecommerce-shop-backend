@@ -28,7 +28,7 @@ DELETE   https://thach-eshop.herokuapp.com/api/v1/products/:id
 PUT gallery-images : https://thach-eshop.herokuapp.com/api/v1/products/gallery-images/:id
 GET featured products: https://thach-eshop.herokuapp.com/api/v1/products/get/featured/:count
 GET products count: https://thach-eshop.herokuapp.com/api/v1/products/get/count
-GET products pagination: https://thach-eshop.herokuapp.com/api/v1/products/pagination/:page
+GET products pagination: https://thach-eshop.herokuapp.com/api/v1/products/pagination/:page/:limit
 ```
 
 ### Orders
