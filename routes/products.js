@@ -48,13 +48,13 @@ router.get(`/`, async (req, res) => {
 
 //Pagination
 router.get(`/pagination/:page`, async (req, res, next) => {
-  let perPage = 10; // số lượng sản phẩm xuất hiện trên 1 page
+  let limit = req.params.limit || 10 // số lượng sản phẩm xuất hiện trên 1 page
   let page = req.params.page || 1; 
 
   await Product
   .find()
-  .skip((perPage * page) - perPage) //Trong page đầu tiên sẽ bỏ qua giá trị là 0
-  .limit(perPage)
+  .skip((limit * page) - limit) //Trong page đầu tiên sẽ bỏ qua giá trị là 0
+  .limit(limit)
   .exec((err, products) => {
     Product.countDocuments((err, count)=> {
       if(err) {
@@ -63,7 +63,7 @@ router.get(`/pagination/:page`, async (req, res, next) => {
       res.send({
         products, // sản phẩm trên một page
         current: page, // page hiện tại
-        pages: Math.ceil(count / perPage), // tổng số các page
+        pages: Math.ceil(count / limit), // tổng số các page
         total: count //tổng sổ sản phẩm
       });
     })
