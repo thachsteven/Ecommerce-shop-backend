@@ -46,6 +46,31 @@ router.get(`/`, async (req, res) => {
   res.send(productList);
 });
 
+//Pagination
+router.get(`/pagination/:page`, async (req, res, next) => {
+  let perPage = 10; // số lượng sản phẩm xuất hiện trên 1 page
+  let page = req.params.page || 1; 
+
+  await Product
+  .find()
+  .skip((perPage * page) - perPage) //Trong page đầu tiên sẽ bỏ qua giá trị là 0
+  .limit(perPage)
+  .exec((err, products) => {
+    Product.countDocuments((err, count)=> {
+      if(err) {
+        return next(err)
+      }
+      res.send({
+        products, // sản phẩm trên một page
+        current: page, // page hiện tại
+        pages: Math.ceil(count / perPage), // tổng số các page
+        total: count //tổng sổ sản phẩm
+      });
+    })
+  })
+
+});
+
 router.get(`/:id`, async (req, res) => {
   const product = await Product.findById(req.params.id).populate("category");
 
